@@ -33,10 +33,14 @@ jobs:
         run: |
           python setup.py sdist bdist_wheel
 
-      - name: List Dist Directory Content
+      - name: List Directory Content
         run: |
            pwd
            ls
+           ls -R dist
+
+      - name: List Dist Directory Content
+        run: |
            ls -R dist
  
       - name: Upload release asset to GitHub
