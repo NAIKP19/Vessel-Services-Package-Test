@@ -35,6 +35,7 @@ jobs:
 
       - name: List Dist Directory Content
         run: |
+           pwd
            ls -R
            ls -R dist
  
