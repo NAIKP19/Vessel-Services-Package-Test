@@ -51,13 +51,13 @@ jobs:
           sudo apt-get install -y gh
           
       - name: Authenticate GitHub CLI # New step added
-        env:
+        env: 
           GH_TOKEN: ${{ secrets..GITHUB_TOKEN }}
         run: |
           echo $GH_TOKEN | gh auth login --with-token
           
       - name: Upload release asset to GitHub # New step added
         env:
-          GH_TOKEN: ${{ secrets..GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload latest dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
