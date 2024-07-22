@@ -1,0 +1,45 @@
+name: Publish Package
+ 
+on:
+  push:
+    branches:
+      - "dev"
+    paths:
+      - "app/**"
+      - ".github/workflows/publish.yml"
+ 
+permissions:
+  id-token: write
+  contents: write
+ 
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+ 
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+ 
+      - name: Install dependencies
+        run: |
+          pip install setuptools wheel twine
+ 
+      - name: Build the package
+        run: |
+          cd app
+          python setup.py sdist bdist_wheel
+ 
+      - name: Upload release asset to GitHub
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: https://api.github.com/repos/${{ github.repository }}/releases/latest/assets
+          asset_path: app/dist/*.whl
+          asset_name: app-package.whl
+          asset_content_type: application/octet-stream
