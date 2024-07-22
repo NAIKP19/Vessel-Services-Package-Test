@@ -1,69 +1,50 @@
 name: Publish Package
- 
 on:
   push:
     branches:
       - "main"
     paths:
-      - "app/**"
-      - ".github/workflows/publish.yml"
- 
+      - "**"
 permissions:
   id-token: write
   contents: write
- 
 jobs:
   publish:
     runs-on: ubuntu-latest
- 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
- 
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           pip install setuptools wheel twine
- 
       - name: Build the package
         run: |
           python setup.py sdist bdist_wheel
-
-      - name: List Directory Content
+      - name: List directory contents
         run: |
-           pwd
-           
-      - name: List Directory Content
+          echo "Listing directory contents:"
+          ls -R
+      - name: List dist directory contents
         run: |
-           ls
-           
-      - name: List Dist Directory Content
-        run: |
-           ls -R dist
-           
-      - name: Install GitHub CLI # New step added
+          echo "Listing dist directory contents:"
+          ls -R dist
+      - name: Install GitHub CLI
         run: |
           sudo apt-get update
           sudo apt-get install -y gh
-
-      - name: Debug GITHUB_TOKEN
-        run: |
-          echo "GH Token is set to: ${{ secrets.GITHUB_TOKEN }}"
+      - name: Authenticate GitHub CLI
         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Authenticate GitHub CLI # New step added
-        env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           echo $GITHUB_TOKEN | gh auth login --with-token
-                 
-      - name: Upload release asset to GitHub # New step added
+          unset GITHUB_TOKEN
+      - name: Upload release asset to GitHub
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
-          gh release upload latest dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
+          gh release upload latest dist/*.whl --repo PRAMOD-VISHNU-NAIK/Form-Handling-In-React
