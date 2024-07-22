@@ -15,7 +15,6 @@ setup(
     author="IAS - Vessel Dev Team",
     author_email="ias@pfizer.com",
     description="A package containing all reusable vessel utilities.",
-    long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     packages=find_packages(where="app"),
     install_requires=["httpx", "cachetools", "boto3", "python-dateutil", "fastapi"],

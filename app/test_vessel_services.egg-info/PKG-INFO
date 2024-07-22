@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: test-vessel-services
+Version: 0.1.0
+Summary: A short description of your project
+Author: IAS - Vessel Dev Team
+Author-email: ias@pfizer.com
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
