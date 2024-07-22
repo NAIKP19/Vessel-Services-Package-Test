@@ -1,49 +1,95 @@
 name: Publish Package
+ 
 on:
   push:
     branches:
       - "main"
+
     paths:
       - "**"
+ 
 permissions:
   id-token: write
   contents: write
+  
 jobs:
   publish:
     runs-on: ubuntu-latest
+ 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+ 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+ 
       - name: Install dependencies
         run: |
+
           python -m pip install --upgrade pip
+
           pip install setuptools wheel twine
+ 
       - name: Build the package
+
         run: |
+
           python setup.py sdist bdist_wheel
+ 
       - name: List directory contents
+
         run: |
+
           echo "Listing directory contents:"
+
           ls -R
+ 
       - name: List dist directory contents
+
         run: |
+
           echo "Listing dist directory contents:"
+
           ls -R dist
+ 
       - name: Install GitHub CLI
+
         run: |
+
           sudo apt-get update
+
           sudo apt-get install -y gh
+ 
       - name: Authenticate GitHub CLI
+
         run: |
+
           echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+ 
       - name: Create GitHub release
+
         id: create_release
+
         run: |
+
           gh release create v1.0.0 --notes "Release notes" || echo "Release already exists"
+ 
       - name: Upload release asset to GitHub
+
         run: |
+
           gh release upload v1.0.0 dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
+ 
+      - name: Publish package to GitHub Packages
+
+        env:
+
+          TWINE_USERNAME: ${{ github.actor }}
+
+          TWINE_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+
+        run: |
+
+          python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
