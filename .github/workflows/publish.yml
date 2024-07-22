@@ -31,7 +31,12 @@ jobs:
  
       - name: Build the package
         run: |
+          cd app
           python setup.py sdist bdist_wheel
+
+      - name: List Dist Directory Content
+        run: |
+           ls -R app/dist
  
       - name: Upload release asset to GitHub
         uses: actions/upload-release-asset@v1
