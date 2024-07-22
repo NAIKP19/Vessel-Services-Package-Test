@@ -44,13 +44,17 @@ jobs:
       - name: List Dist Directory Content
         run: |
            ls -R dist
- 
-      - name: Upload release asset to GitHub
-        uses: actions/upload-release-asset@v1
+      - name: Install GitHub CLI # New step added
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+      - name: Authenticate GitHub CLI # New step added
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: https://github.com/NAIKP19/Vessel-Services-Package-Test/releases/latest/assets
-          asset_path: dist/test_vessel_services-0.1.0-py3-none-any.whl
-          asset_name: app-package.whl
-          asset_content_type: application/octet-stream
+          GH_TOKEN: ${{ secrets..GITHUB_TOKEN }}
+        run: |
+          echo $GH_TOKEN | gh auth login --with-token
+      - name: Upload release asset to GitHub # New step added
+        env:
+          GH_TOKEN: ${{ secrets..GITHUB_TOKEN }}
+        run: |
+          gh release upload latest dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
