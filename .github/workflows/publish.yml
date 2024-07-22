@@ -44,15 +44,18 @@ jobs:
       - name: List Dist Directory Content
         run: |
            ls -R dist
+           
       - name: Install GitHub CLI # New step added
         run: |
           sudo apt-get update
           sudo apt-get install -y gh
+          
       - name: Authenticate GitHub CLI # New step added
         env:
           GH_TOKEN: ${{ secrets..GITHUB_TOKEN }}
         run: |
           echo $GH_TOKEN | gh auth login --with-token
+          
       - name: Upload release asset to GitHub # New step added
         env:
           GH_TOKEN: ${{ secrets..GITHUB_TOKEN }}
