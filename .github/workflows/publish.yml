@@ -45,6 +45,7 @@ jobs:
           unset GITHUB_TOKEN
       - name: Upload release asset to GitHub
         env:
-          GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN  }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release upload latest dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
+          gh release upload latest dist/*.whl --repo
+https://github.com/NAIKP19/Vessel-Services-Package-Test
