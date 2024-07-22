@@ -37,9 +37,7 @@ jobs:
         run: |
            pwd
            ls
-           ls -R
            ls -R dist
-           cd dist
  
       - name: Upload release asset to GitHub
         uses: actions/upload-release-asset@v1
