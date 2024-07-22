@@ -36,6 +36,7 @@ jobs:
       - name: List Dist Directory Content
         run: |
            ls -R
+           ls -R dist
  
       - name: Upload release asset to GitHub
         uses: actions/upload-release-asset@v1
