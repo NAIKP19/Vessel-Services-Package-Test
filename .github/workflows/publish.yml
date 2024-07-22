@@ -49,12 +49,18 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y gh
+
+      - name: Debug GH_TOKEN
+        run: |
+          echo "GH Token is set to: ${{ secrets.GITHUB_TOKEN }}"
+        env:
+           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Authenticate GitHub CLI # New step added
-        env: 
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo $GH_TOKEN | gh auth login --with-token
+          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
+        env:
+           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Upload release asset to GitHub # New step added
         env:
