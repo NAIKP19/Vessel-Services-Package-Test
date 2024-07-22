@@ -50,20 +50,20 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y gh
 
-      - name: Debug GH_TOKEN
+      - name: Debug GITHUB_TOKEN
         run: |
           echo "GH Token is set to: ${{ secrets.GITHUB_TOKEN }}"
         env:
-           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Authenticate GitHub CLI # New step added
         env:
-           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo $GH_TOKEN | gh auth login --with-token
+          echo $GITHUB_TOKEN | gh auth login --with-token
                  
       - name: Upload release asset to GitHub # New step added
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release upload latest dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
