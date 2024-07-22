@@ -36,9 +36,11 @@ jobs:
       - name: List Directory Content
         run: |
            pwd
+           
+      - name: List Directory Content
+        run: |
            ls
-           ls -R dist
-
+           
       - name: List Dist Directory Content
         run: |
            ls -R dist
