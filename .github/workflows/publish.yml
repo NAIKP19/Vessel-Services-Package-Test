@@ -43,6 +43,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: https://api.github.com/repos/${{ github.repository }}/releases/latest/assets
-          asset_path: app/dist/*.whl
+          asset_path: dist/*.whl
           asset_name: app-package.whl
           asset_content_type: application/octet-stream
