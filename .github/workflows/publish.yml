@@ -48,8 +48,8 @@ jobs:
  
       - name: Commit and push updated version.py
         run: |
-          git config --global user.email "your-email@example.com"
-          git config --global user.name "your-username"
+          git config --global user.email "pramod.naik@pfizer.com"
+          git config --global user.name "NAIKP19"
           git add version.py
           git commit -m "Bump version to ${{ env.new_version }}"
           git push
