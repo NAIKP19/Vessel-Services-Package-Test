@@ -1,73 +1,46 @@
 name: Publish Package
- 
 on:
   push:
     branches:
       - "main"
     paths:
-      - "**"
- 
+      - "app/**"
+      - ".github/workflows/publish.yml"
 permissions:
   id-token: write
   contents: write
- 
 jobs:
   publish:
     runs-on: ubuntu-latest
- 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
- 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
- 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install setuptools wheel twine
- 
       - name: Build the package
         run: |
           python setup.py sdist bdist_wheel
  
-      - name: List directory contents
+      - name: List Directory Content
         run: |
-          echo "Listing directory contents:"
-          ls -R
- 
-      - name: List dist directory contents
+           pwd
+      - name: List Directory Content
         run: |
-          echo "Listing dist directory contents:"
-          ls -R dist
- 
-      - name: Install GitHub CLI
+           ls
+      - name: List Dist Directory Content
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gh
- 
-      - name: Authenticate GitHub CLI
-        run: |
-          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
- 
-      - name: Set release version
-        id: get_version
-        run: echo "RELEASE_VERSION=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
- 
-      - name: Create GitHub release
-        id: create_release
-        run: |
-          gh release create v${{ env.RELEASE_VERSION }} --notes "Release notes" || echo "Release already exists"
- 
+           ls -R dist
       - name: Upload release asset to GitHub
-        run: |
-          gh release upload v${{ env.RELEASE_VERSION }} dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
- 
-      - name: Publish package to GitHub Packages
+        uses: actions/upload-release-asset@v1
         env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: https://github.com/NAIKP19/Vessel-Services-Package-Test/releases/latest/assets
+          asset_path: dist/test_vessel_services-0.1.0-py3-none-any.whl
+          asset_name: app-package.whl
+          asset_content_type: application/octet-stream
