@@ -43,7 +43,7 @@ jobs:
       - name: Create GitHub release
         id: create_release
         run: |
-          gh release create v1.0.0 --notes "Release notes" || echo "Release already exists"
+          gh release create v1.0.1 --notes "Release notes" || echo "Release already exists"
       - name: Upload release asset to GitHub
         run: |
           gh release upload v1.0.1 dist/*.whl --repo https://github.com/NAIKP19/Vessel-Services-Package-Test
