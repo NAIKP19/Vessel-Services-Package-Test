@@ -67,6 +67,10 @@ jobs:
         run: |
           ls
           
+      - name: List Dist folder
+        run: |
+          ls dist/
+          
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
