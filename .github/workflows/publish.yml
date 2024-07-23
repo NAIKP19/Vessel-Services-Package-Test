@@ -58,7 +58,15 @@ jobs:
         run: |
           python setup.py sdist bdist_wheel
           #echo "WHEEL_FILE=dist/test_vessel_services-${{env.new_version}}-py3-none-any.whl" >> $GITHUB_ENV
- 
+
+      - name: PWD
+        run: |
+          pwd
+          
+      - name: List the Files
+        run: |
+          ls
+          
       - name: Create GitHub release
         id: create_release
         uses: actions/create-release@v1
