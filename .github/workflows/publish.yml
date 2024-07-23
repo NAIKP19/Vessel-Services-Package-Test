@@ -67,7 +67,7 @@ jobs:
  
       - name: Publish package to GitHub Packages
         env:
-          TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
         run: |
           python -m twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
